@@ -19,13 +19,40 @@
 #include <stdint.h>
 #include "stm32f429xx.h"
 
+/*
+ * Function signature declaration
+ */
 void UART_Enable(void);
 void sendData(char*);
 void receiveData(void);
+void ADC_Enable(void);
+void ADC_receive(void);
+void Delay(void);
 
+/* Private variable declaration
+ *
+ */
 char data_received[10] = { 0 };
+uint32_t ADC_Conversion_value[2] = { 0 };
 
 int main(void) {
+
+	UART_Enable();
+	ADC_Enable();
+
+	while (1) {
+		ADC_receive();
+//		receiveData();
+//		sendData("SUCESS\n");
+//
+	}
+}
+
+/*
+ * UART register level Enable
+ */
+void UART_Enable(void) {
+
 	RCC->APB2ENR |= (1U << 4); //Enabling UART peripheral
 
 	RCC->AHB1ENR |= (1U << 0); //Enabling GPIOA port
@@ -33,21 +60,6 @@ int main(void) {
 	GPIOA->AFR[1] |= (7U << 4);
 	GPIOA->AFR[1] |= (7U << 8);
 
-	UART_Enable();
-
-	while (1) {
-
-		receiveData();
-		sendData("SUCESS\n");
-
-		for (int i = 0; i >= 100000; i++) {
-			// send this for delay;
-		}
-	}
-
-}
-
-void UART_Enable(void) {
 	USART1->CR1 &= ~(1U << 15); 	// Over sampling by 16
 	USART1->CR1 &= ~(1U << 12); 	// 8 data bits or word length
 	USART1->CR1 &= ~(1U << 10); 	// Disable parity
@@ -55,6 +67,37 @@ void UART_Enable(void) {
 	USART1->CR1 |= (1U << 2);		// Receiver enable
 	USART1->BRR = 0x683;  		// setting baud-rate as 9600 for a 16 MHZ clock
 	USART1->CR1 |= (1 << 13);		// UART enable
+}
+
+/*
+ * ADC register enable
+ */
+void ADC_Enable(void) {
+
+	RCC->APB2ENR |= (1U << 8); 			//Enable the ADC 1
+	GPIOA->MODER |= (3U << 2); 			//Analog mode PA 1
+	GPIOA->MODER |= (3U << 0); 			//Analog mode PA 0
+
+	ADC1->CR1 &= ~(1U << 24); 		 // Reset the resolution for 12-bit
+	ADC1->CR1 &= ~(1U << 25);
+	ADC1->CR1 |= (1U << 8); 			//Enable scan mode
+
+	ADC1->CR2 |= (1U << 10);			//EOCS is selected
+	ADC1->CR2 |= (1U << 1);				//Continuous conversion
+
+	ADC1->SMPR2 |= (3U << 0);		// Sample time is decided to be 56 cycles
+	ADC1->SMPR2 |= (3U << 3);
+
+	ADC1->SQR1 |= (1U << 20);  		//No of channels is 2
+
+	ADC1->SQR3 &= ~(0x1F << 0);		//Set Channel 0 as 1 in the sequence
+	ADC1->SQR3 |= (0U << 0);
+	ADC1->SQR3 &= ~(0x1F << 5);		//Clearing the 2nd channel
+	ADC1->SQR3 |= (1U << 5);			//Set Channel 1 as 2 in the sequence
+
+	ADC1->CR2 |= (1U << 0);			//ADC 1 ON
+	ADC1->CR2 |= (1U << 30); 			//SW start is enabled
+
 }
 
 void sendData(char *data) {
@@ -83,6 +126,22 @@ void receiveData(void) {
 	data_received[i] = '\0';
 }
 
+void ADC_receive(void) {
+	for (int i = 0; i < 2; i++) {
+		while (!(ADC1->SR & (1U << 1))) {
+
+		}
+		ADC_Conversion_value[i] = ADC1->DR;
+	}
+	Delay();
+}
+
+void Delay(void){
+
+	for(int i = 0; i >= 1000; i++) {
+		//send this for delay;
+	}
+}
 //
 ////#include "stm32f4xx.h"
 //
