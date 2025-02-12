@@ -59,8 +59,8 @@ all: main-build
 main-build: UART_driver.elf secondary-outputs
 
 # Tool invocations
-UART_driver.elf UART_driver.map: $(OBJS) $(USER_OBJS) D:\Embedded\ Study\SPI_LCD\UART_driver\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "UART_driver.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Embedded Study\SPI_LCD\UART_driver\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+UART_driver.elf UART_driver.map: $(OBJS) $(USER_OBJS) D:\Thynkloop\UART\Code\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "UART_driver.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Thynkloop\UART\Code\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART_driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

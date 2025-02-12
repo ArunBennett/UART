@@ -1,4 +1,4 @@
-../Src/main.c:28:6:main	16	static
+../Src/main.c:28:5:main	16	static
 ../Src/main.c:50:6:UART_Enable	4	static
 ../Src/main.c:60:6:sendData	16	static
-../Src/main.c:67:6:receiveData	16	static
+../Src/main.c:70:6:receiveData	16	static

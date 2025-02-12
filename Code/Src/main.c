@@ -25,7 +25,7 @@ void receiveData(void);
 
 char data_received[10] = { 0 };
 
-void main(void) {
+int main(void) {
 	RCC->APB2ENR |= (1U << 4); //Enabling UART peripheral
 
 	RCC->AHB1ENR |= (1U << 0); //Enabling GPIOA port
@@ -53,29 +53,34 @@ void UART_Enable(void) {
 	USART1->CR1 &= ~(1U << 10); 	// Disable parity
 	USART1->CR1 |= (1U << 3); 		// Transmitter enable
 	USART1->CR1 |= (1U << 2);		// Receiver enable
-	USART1->BRR = 0x683;  			// setting baud-rate as 9600 for a 16 MHZ clock
+	USART1->BRR = 0x683;  		// setting baud-rate as 9600 for a 16 MHZ clock
 	USART1->CR1 |= (1 << 13);		// UART enable
 }
 
-void sendData(char* data) {
-	while (!(USART1->SR |= (1U << 6))) {
-		// Stay inside if the already loaded is not sent
+void sendData(char *data) {
+	while (*data) {
+		while (!(USART1->SR & (1U << 6))) {
+			// Stay inside if the already loaded is not sent
+		}
+		USART1->DR = *data++;
 	}
-	USART1->DR = data++;
+
 }
 
 void receiveData(void) {
-	for (int i = 0; i < 5; i++) {
-		while (!(USART1->SR |= (1U << 5))) {
+	int i = 0;
+	while (i <= sizeof(data_received) - 1) {
+		while (!(USART1->SR & (1U << 5))) {
 
 		}
-		data_received[i] = USART1->DR;
+		char temp = USART1->DR;
 
-		if (data_received[i] == 0x10) {
-			return;
+		if (temp == '\n' || temp == '\r') {
+			break;
 		}
+		data_received[i++] = USART1->DR;
 	}
-
+	data_received[i] = '\0';
 }
 
 //
