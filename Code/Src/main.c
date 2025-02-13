@@ -28,6 +28,7 @@ void receiveData(void);
 void ADC_Enable(void);
 void ADC_receive(void);
 void Delay(void);
+void timer1_Enable_1hz(void);
 
 /* Private variable declaration
  *
@@ -98,6 +99,14 @@ void ADC_Enable(void) {
 	ADC1->CR2 |= (1U << 0);			//ADC 1 ON
 	ADC1->CR2 |= (1U << 30); 			//SW start is enabled
 
+}
+
+/*
+ * Initialize the timer for 1 HZ
+ */
+void timer1_Enable_1hz(void){
+	RCC->APB2ENR	|= (1U << 0);
+	TIM1->PSC	 	= 1600;
 }
 
 void sendData(char *data) {

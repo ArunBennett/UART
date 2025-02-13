@@ -1,7 +1,8 @@
-../Src/main.c:38:5:main	1
-../Src/main.c:54:6:UART_Enable	1
-../Src/main.c:75:6:ADC_Enable	1
-../Src/main.c:103:6:sendData	3
-../Src/main.c:113:6:receiveData	5
-../Src/main.c:129:6:ADC_receive	3
-../Src/main.c:139:6:Delay	2
+../Src/main.c:39:5:main	1
+../Src/main.c:55:6:UART_Enable	1
+../Src/main.c:76:6:ADC_Enable	1
+../Src/main.c:107:6:timer1_Enable_1hz	1
+../Src/main.c:112:6:sendData	3
+../Src/main.c:122:6:receiveData	5
+../Src/main.c:138:6:ADC_receive	3
+../Src/main.c:148:6:Delay	2
