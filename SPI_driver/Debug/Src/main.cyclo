@@ -1,0 +1,6 @@
+../Src/main.c:28:5:main	1
+../Src/main.c:38:6:SPI1_init	1
+../Src/main.c:83:6:transfer_data	4
+../Src/main.c:100:6:NSS_pinLow	1
+../Src/main.c:104:6:NSS_pinHigh	1
+../Src/main.c:108:6:Delay	2

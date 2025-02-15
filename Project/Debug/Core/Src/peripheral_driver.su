@@ -1,0 +1,3 @@
+../Core/Inc/peripheral_driver.h:32:24:bit_set	16	static
+../Core/Inc/peripheral_driver.h:40:24:uart_division	16	static
+../Core/Src/peripheral_driver.c:15:6:USART1_Init	8	static

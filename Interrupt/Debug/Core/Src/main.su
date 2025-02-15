@@ -1,0 +1,16 @@
+../Core/Src/main.c:90:5:main	16	static
+../Core/Src/main.c:164:6:SystemClock_Config	88	static
+../Core/Src/main.c:206:13:MX_SPI1_Init	8	static
+../Core/Src/main.c:242:13:MX_DMA_Init	16	static
+../Core/Src/main.c:263:13:MX_GPIO_Init	32	static
+../Core/Src/main.c:287:6:Interrupt_Init	4	static
+../Core/Src/main.c:304:6:EXTI0_IRQHandler	4	static
+../Core/Src/main.c:313:6:SPI1_Init	4	static
+../Core/Src/main.c:347:6:transfer_data	16	static
+../Core/Src/main.c:362:6:NSS_pinLow	4	static
+../Core/Src/main.c:366:6:NSS_pinHigh	4	static
+../Core/Src/main.c:370:6:Delay	16	static,ignoring_inline_asm
+../Core/Src/main.c:378:6:SPI1_IRQHandler	8	static
+../Core/Src/main.c:398:19:SPI_Transmit	24	static
+../Core/Src/main.c:406:19:SPI_Receive	16	static
+../Core/Src/main.c:416:6:Error_Handler	4	static,ignoring_inline_asm
